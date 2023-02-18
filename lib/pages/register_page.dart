@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
     // check if confirm password != password
     if (passwordController.text != confirmPasswordController.text) {
       Navigator.pop(context);
-      showErrorMessage('Passwords do not match!');
+      matchErrorMessage();
       return;
     }
     // try creating the user
@@ -46,31 +46,67 @@ class _RegisterPageState extends State<RegisterPage> {
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       if (e.code == 'weak-password') {
-        showErrorMessage('The password provided is too weak.');
+        weakPassErrorMessage();
       } else if (e.code == 'email-already-in-use') {
-        showErrorMessage('The account already exists for that email.');
+        emailErrorMessage();
       }
     } catch (e) {
       print(e);
     }
   }
 
-  // wrong email message popup
-  void showErrorMessage(String message) {
-    Row(children: [
-      const SizedBox(width: 10),
-      Expanded(
-        child: Column(children: [
-          Text(
-            message,
-            style: const TextStyle(
-              color: Colors.red,
-              fontSize: 15,
+  // weak pass
+  void weakPassErrorMessage() {
+    showDialog(
+        barrierColor: null,
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            alignment: Alignment(-2.9, 0.22),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            title: Center(
+              child: Text('The password provided is too weak.',
+                  style: TextStyle(color: Colors.red, fontSize: 15)),
             ),
-          ),
-        ]),
-      ),
-    ]);
+          );
+        });
+  }
+
+  // email error message
+  void emailErrorMessage() {
+    showDialog(
+        barrierColor: null,
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            alignment: Alignment(-27.0, 0.22),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            title: Center(
+              child: Text('The account already exists for that email.',
+                  style: TextStyle(color: Colors.red, fontSize: 15)),
+            ),
+          );
+        });
+  }
+
+  // email error message
+  void matchErrorMessage() {
+    showDialog(
+        barrierColor: null,
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            alignment: Alignment(-2.4, 0.22),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            title: Center(
+              child: Text('The passwords do not match.',
+                  style: TextStyle(color: Colors.red, fontSize: 15)),
+            ),
+          );
+        });
   }
 
   @override
