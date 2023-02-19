@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../components/my_button.dart';
-import '../components/my_textfield.dart';
+import 'package:selca/pages/components/my_button.dart';
+import 'package:selca/pages/components/my_textfield.dart';
+import 'login_or_register_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;

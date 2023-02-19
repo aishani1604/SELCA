@@ -10,18 +10,17 @@ class AuthPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          // user is logged in
-          if (snapshot.hasData) {
-            return HomePage();
-          }
-          // user is NOT logged in
-          else {
-            return LoginOrRegisterPage();
-          }
-        },
-      ),
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            // user is logged in
+            if (snapshot.hasData) {
+              return HomePage();
+            }
+            // user is NOT logged in
+            else {
+              return const LoginOrRegisterPage();
+            }
+          }),
     );
   }
 }
